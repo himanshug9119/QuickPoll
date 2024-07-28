@@ -11,6 +11,7 @@ export default function SignUp() {
   };
   const handelSubmit = async (e) =>{
     e.preventDefault();
+    setError(null);
     try {
       setLoading(true);
       const res = await fetch('/api/auth/signup', {

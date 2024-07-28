@@ -5,7 +5,9 @@ import userRouter from './routes/user.routes.js'
 import authRouter from './routes/auth.routes.js'
 import cookieParser from 'cookie-parser'
 dotenv.config();
-mongoose.connect(process.env.MONGO).then(()=>{
+
+const URL = "mongodb+srv://guptasitapur489:ieQAKp6wrT75ySrB@first.ewg8dja.mongodb.net/?retryWrites=true&w=majority&appName=First";
+mongoose.connect(URL).then(()=>{
     console.log('Connected to mongoDB');
 }).catch((err)=>{
     console.log(err);

@@ -5,6 +5,9 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Header from './components/Header';
+import Poll from './pages/Poll';
+import CreatePoll from './pages/CreatePoll';
+import ResultsPoll from './pages/ResultsPoll';
 import { PrivateRoute1, PrivateRoute2 } from "./components/PrivateRoute";
 export default function App(){
   return (
@@ -12,9 +15,12 @@ export default function App(){
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route element={<PrivateRoute1 />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
+        {/* <Route element={<PrivateRoute1 />}> */}
+          <Route path="/profile/:username" element={<Profile />} />
+          {/* <Route path="/create-poll" element={<CreatePoll />} /> */}
+        {/* </Route> */}
+          <Route path="/create-poll" element={<CreatePoll />} />
+
         <Route element={<PrivateRoute2 />}>
           <Route path="/sign-in" element={<SignIn />} />
         </Route>
@@ -22,6 +28,8 @@ export default function App(){
           <Route path="/sign-up" element={<SignUp />} />
         </Route>
         <Route path="/about" element={<About />} />
+        <Route path="/vote/:id" element={<Poll/>} />
+        <Route path="/results/:id" element={<ResultsPoll />} />
       </Routes>
     </BrowserRouter>
   );
