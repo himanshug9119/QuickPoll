@@ -139,3 +139,4 @@ export const mockPolls = [
   },
 ];
 
+export default mockPolls;
