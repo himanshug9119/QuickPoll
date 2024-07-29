@@ -1,17 +1,21 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "mern-estate-5cb56.firebaseapp.com",
-  projectId: "mern-estate-5cb56",
-  storageBucket: "mern-estate-5cb56.appspot.com",
-  messagingSenderId: "998363763012",
-  appId: "1:998363763012:web:efd11656f6c32cf7828711",
+  apiKey: import.meta.env.FIREBASE_API_KEY,
+  authDomain: "quickpoll-bf11c.firebaseapp.com",
+  projectId: "quickpoll-bf11c",
+  storageBucket: "quickpoll-bf11c.appspot.com",
+  messagingSenderId: "364934576249",
+  appId: "1:364934576249:web:3d77f7a4d8a6b90d72bca8",
+  measurementId: "G-8RFYBBQ11T"
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

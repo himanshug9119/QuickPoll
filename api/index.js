@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import path from 'path'
 dotenv.config();
 
-const URL = "mongodb+srv://guptasitapur489:ieQAKp6wrT75ySrB@first.ewg8dja.mongodb.net/?retryWrites=true&w=majority&appName=First";
+const URL = "";
 mongoose.connect(URL).then(()=>{
     console.log('Connected to mongoDB');
 }).catch((err)=>{
