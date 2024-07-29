@@ -1,9 +1,13 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import mockPollData from '../data/mockPollsData'; // Adjust path if needed
 
 const PollResults = () => {
-  const location = useLocation();
-  const poll = location.state?.poll;
+  const { id } = useParams();
+  console.log(id);
+  console.log(mockPollData);
+  // Find the poll data from mockPollData based on the pollId
+  const poll = mockPollData.find(p => p.id === parseInt(id, 10));
 
   if (!poll) {
     return <p className="text-center text-red-500">No poll data available. Please try again.</p>;
@@ -54,13 +58,15 @@ const PollResults = () => {
             <div key={index} className="mb-4">
               <h3 className="font-semibold text-lg">{`Option ${index + 1} (${votesCount[index] || 0} votes)`}</h3>
               <ul className="list-disc list-inside pl-5 text-gray-700">
-                {voters.map((voter, i) => (
+                {voters.length > 0 ? voters.map((voter, i) => (
                   <li key={i}>
                     <Link to={`/profile/${voter}`} className="text-blue-500 hover:underline">
                       {voter}
                     </Link>
                   </li>
-                ))}
+                )) : (
+                  <li className="text-gray-600">No voters yet</li>
+                )}
               </ul>
             </div>
           );
