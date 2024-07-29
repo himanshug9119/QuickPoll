@@ -16,6 +16,7 @@ export const mockPolls = [
       { user: 'ivy_m', option: 2 },
       { user: 'jack_lee', option: 0 },
     ],
+    likedBy: ['alice_j', 'carol_white', 'grace_lee']
   },
   {
     id: 2,
@@ -29,6 +30,7 @@ export const mockPolls = [
       { user: 'grace_lee', option: 0 },
       { user: 'ivy_m', option: 1 },
     ],
+    likedBy: ['eva_green', 'grace_lee']
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ export const mockPolls = [
       { user: 'henry_kim', option: 1 },
       { user: 'jack_lee', option: 2 },
     ],
+    likedBy: ['bob_smith', 'frank_w']
   },
   {
     id: 4,
@@ -57,6 +60,7 @@ export const mockPolls = [
       { user: 'henry_kim', option: 2 },
       { user: 'ivy_m', option: 0 },
     ],
+    likedBy: ['alice_j', 'eva_green', 'ivy_m']
   },
   {
     id: 5,
@@ -70,6 +74,7 @@ export const mockPolls = [
       { user: 'ivy_m', option: 3 },
       { user: 'jack_lee', option: 0 },
     ],
+    likedBy: ['carol_white', 'grace_lee']
   },
   {
     id: 6,
@@ -83,6 +88,7 @@ export const mockPolls = [
       { user: 'henry_kim', option: 0 },
       { user: 'jack_lee', option: 1 },
     ],
+    likedBy: ['alice_j', 'henry_kim']
   },
   {
     id: 7,
@@ -99,6 +105,7 @@ export const mockPolls = [
       { user: 'ivy_m', option: 2 },
       { user: 'jack_lee', option: 3 },
     ],
+    likedBy: ['bob_smith', 'carol_white']
   },
   {
     id: 8,
@@ -111,6 +118,7 @@ export const mockPolls = [
       { user: 'grace_lee', option: 2 },
       { user: 'ivy_m', option: 3 },
     ],
+    likedBy: ['eva_green', 'grace_lee']
   },
   {
     id: 9,
@@ -124,6 +132,7 @@ export const mockPolls = [
       { user: 'henry_kim', option: 3 },
       { user: 'jack_lee', option: 0 },
     ],
+    likedBy: ['bob_smith', 'jack_lee']
   },
   {
     id: 10,
@@ -135,7 +144,9 @@ export const mockPolls = [
       { user: 'david_b', option: 1 },
       { user: 'frank_w', option: 2 },
       { user: 'henry_kim', option: 3 },
-      { user: 'jack_lee', option: 0 },]
+      { user: 'jack_lee', option: 0 },
+    ],
+    likedBy: ['david_b', 'jack_lee']
   },
 ];
 
