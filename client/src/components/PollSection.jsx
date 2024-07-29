@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { FaThumbsUp, FaShareAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const PollSection = ({ poll }) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [liked, setLiked] = useState(false);
+  const [voted, setVoted] = useState(false);
+  const navigate = useNavigate();
 
   if (!poll) {
     return <p className="text-center text-red-500">No poll data found. Please navigate from the poll list.</p>;
@@ -16,8 +19,10 @@ const PollSection = ({ poll }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedOption) {
+      setVoted(true);
       alert(`You voted for: ${selectedOption}`);
-      // Handle vote submission
+      // Handle vote submission, then navigate to results page
+      navigate(`/results/${poll.id}`);
     } else {
       alert('Please select an option before submitting.');
     }
@@ -47,27 +52,31 @@ const PollSection = ({ poll }) => {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">{poll.question}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">{poll.question}</h1>
+
       <form onSubmit={handleSubmit}>
-        {poll.options.map((option, index) => (
-          <label
-            key={index}
-            className={`block mb-4 p-3 rounded-md border cursor-pointer transition-colors duration-300 ${
-              selectedOption === option ? 'bg-blue-100 border-blue-500' : 'bg-white border-gray-300'
-            }`}
-          >
-            <input
-              type="radio"
-              name="pollOption"
-              value={option}
-              checked={selectedOption === option}
-              onChange={handleOptionChange}
-              className="hidden"
-            />
-            <span className="text-lg">{option}</span>
-          </label>
-        ))}
-        <div className="flex justify-between items-center mt-4">
+        <div className="space-y-4 mb-6">
+          {poll.options.map((option, index) => (
+            <label
+              key={index}
+              className={`block p-4 rounded-md border cursor-pointer transition-colors duration-300 ${
+                selectedOption === option ? 'bg-blue-100 border-blue-500' : 'bg-white border-gray-300'
+              }`}
+            >
+              <input
+                type="radio"
+                name="pollOption"
+                value={option}
+                checked={selectedOption === option}
+                onChange={handleOptionChange}
+                className="hidden"
+              />
+              <span className="text-lg">{option}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-4">
             <button
               type="button"
@@ -88,7 +97,7 @@ const PollSection = ({ poll }) => {
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
           >
-            Vote
+            {voted ? 'View Results' : 'Vote'}
           </button>
         </div>
       </form>

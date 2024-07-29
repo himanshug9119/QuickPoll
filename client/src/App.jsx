@@ -11,6 +11,7 @@ import Poll from './pages/Poll';
 import CreatePoll from './pages/CreatePoll';
 import ResultsPoll from './pages/ResultsPoll';
 import { PrivateRoute1, PrivateRoute2 } from "./components/PrivateRoute";
+import Footer from './components/Footer';
 export default function App(){
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ export default function App(){
         <Route path="/poll/:id" element={<Poll/>} />
         <Route path="/results/:id" element={<ResultsPoll />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
