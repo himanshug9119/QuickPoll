@@ -54,24 +54,27 @@ const Profile = () => {
       <div className="mt-8">
         <div className="bg-white rounded-lg shadow-md p-6 mb-4">
           <h2 className="text-2xl font-semibold mb-4">Polls Created</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {pollsCreated.length > 0 ? (
             pollsCreated.map(poll => (
               poll && (
                 <PollItem
-                  key={poll.id}
-                  poll={poll}
-                  created={true}
-                  onDelete={() => handleDeletePoll(poll.id)}
+                key={poll.id}
+                poll={poll}
+                created={true}
+                onDelete={() => handleDeletePoll(poll.id)}
                 />
               )
             ))
           ) : (
             <p className="text-gray-600">No polls created.</p>
           )}
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-semibold mb-4">Polls Answered</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {pollsAnswered.length > 0 ? (
             pollsAnswered.map(poll => (
               poll && (
@@ -85,6 +88,7 @@ const Profile = () => {
           ) : (
             <p className="text-gray-600">No polls answered.</p>
           )}
+        </div>
         </div>
       </div>
     </div>

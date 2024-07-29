@@ -34,7 +34,7 @@ export default function Header() {
             </li>
           </Link>
           <Link to="/create-poll">
-            <li className="hidden sm:inline text-slate-700 hover:underline">
+            <li className="sm:inline text-slate-700 hover:underline">
               Create Poll
             </li>
           </Link>
