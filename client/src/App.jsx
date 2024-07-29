@@ -28,7 +28,7 @@ export default function App(){
           <Route path="/sign-up" element={<SignUp />} />
         </Route>
         <Route path="/about" element={<About />} />
-        <Route path="/vote/:id" element={<Poll/>} />
+        <Route path="/poll/:id" element={<Poll/>} />
         <Route path="/results/:id" element={<ResultsPoll />} />
       </Routes>
     </BrowserRouter>

@@ -5,7 +5,7 @@ const PollItem = ({ poll, created }) => {
   const navigate = useNavigate();
 
   const handleQuestionClick = () => {
-    navigate(`/vote/${poll.id}`, { state: { poll } });
+    navigate(`/poll/${poll.id}`, { state: { poll } });
   };
 
   const handleResults = () => {
