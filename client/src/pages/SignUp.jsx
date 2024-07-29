@@ -1,15 +1,18 @@
-import { Link,useNavigate} from "react-router-dom";
-import {useState} from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
 import OAuth from "../components/OAuth";
+
 export default function SignUp() {
-  const [formData , setFormData] = useState({});
-  const [error , setError] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
-    setFormData({ ...formData,[e.target.id]:e.target.value});
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  const handelSubmit = async (e) =>{
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     try {
@@ -22,59 +25,64 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(formData);
-      if(data.success === false){
+      if (data.success === false) {
         setError(data.message);
         setLoading(false);
         return;
       }
       setError(null);
       setLoading(false);
-      console.log(data);
-      navigate('/sign-in')
+      navigate('/sign-in');
     } catch (error) {
       setLoading(false);
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
+
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold">Sign Up</h1>
-      <form onSubmit={handelSubmit} className="flex flex-col gap-4">
+    <div className="max-w-md mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg border border-gray-300">
+      <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Sign Up</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="username"
-          className="border p-3 rounded-lg mt-5"
-          id="username" onChange={handleChange}
+          placeholder="Username"
+          id="username"
+          onChange={handleChange}
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          required
         />
         <input
           type="email"
-          placeholder="email"
-          className="border p-3 rounded-lg"
-          id="email" onChange={handleChange}
+          placeholder="Email"
+          id="email"
+          onChange={handleChange}
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          required
         />
         <input
           type="password"
-          placeholder="password"
-          className="border p-3 rounded-lg"
-          id="password" onChange={handleChange}
+          placeholder="Password"
+          id="password"
+          onChange={handleChange}
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          required
         />
-        <button disabled={loading}
+        <button
           type="submit"
-          className="bg-slate-700 text-white p-3 rounded-lg 
-          uppercase hover:opacity-95 disabled:opacity-80"
+          disabled={loading}
+          className="bg-blue-600 text-white p-3 rounded-md uppercase font-semibold hover:bg-blue-700 transition-colors disabled:bg-blue-400"
         >
-          {loading ? 'loading...' : 'Sign Up'}
+          {loading ? 'Loading...' : 'Sign Up'}
         </button>
-        <OAuth/>
+        <OAuth />
       </form>
-      <div className="flex gap-2 mt-5">
-        <p>Already have an account?</p>
+      <div className="flex justify-center gap-2 mt-6">
+        <p className="text-gray-600">Already have an account?</p>
         <Link to={"/sign-in"}>
-          <span className="text-blue-700">Sign In</span>
+          <span className="text-blue-600 font-semibold hover:underline">Sign In</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
     </div>
   );
 }
