@@ -1,4 +1,6 @@
 import {BrowserRouter , Routes, Route} from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import Home from './pages/Home';
 import About from './pages/about';
 import SignIn from './pages/SignIn';

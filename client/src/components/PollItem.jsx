@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 const PollItem = ({ poll, created }) => {
   const navigate = useNavigate();
 
-  const handleQuestionClick = () => {
-    navigate(`/poll/${poll.id}`, { state: { poll } });
-  };
-
   const handleResults = () => {
     navigate(`/results/${poll.id}`, { state: { poll } });
+  };
+
+  const handleVote = () => {
+    navigate(`/poll/${poll.id}`, { state: { poll } });
   };
 
   return (
@@ -17,7 +17,7 @@ const PollItem = ({ poll, created }) => {
       <div className="px-6 py-4">
         <div
           className="font-bold text-xl mb-4 cursor-pointer text-blue-600 hover:text-blue-800"
-          onClick={handleQuestionClick}
+          onClick={handleVote}
         >
           {poll.question}
         </div>
@@ -29,18 +29,30 @@ const PollItem = ({ poll, created }) => {
           ))}
         </ul>
       </div>
-      <div className="px-6 pt-4 pb-2 flex justify-between items-center">
+      <div className="px-6 pt-4 pb-2 flex justify-between items-center border-t border-gray-200">
+        <div className="flex space-x-4 items-center">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
+            onClick={handleResults}
+          >
+            Results
+          </button>
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-full"
+            onClick={handleVote}
+          >
+            Vote
+          </button>
+          <div className="text-gray-600 flex items-center">
+            <i className="fas fa-thumbs-up text-blue-600 mr-2"></i>
+            <span>{poll.likedBy.length}</span>
+          </div>
+        </div>
         {created && (
           <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-full">
             Delete
           </button>
         )}
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full"
-          onClick={handleResults}
-        >
-          View Results
-        </button>
       </div>
     </div>
   );
