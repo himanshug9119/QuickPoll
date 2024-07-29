@@ -1,13 +1,14 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 import userRouter from './routes/user.routes.js'
 import authRouter from './routes/auth.routes.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
+import dotenv from 'dotenv'
 dotenv.config();
 
-const URL = "";
+const URL = process.env.MONGO_CONNECT_URL;
+
 mongoose.connect(URL).then(()=>{
     console.log('Connected to mongoDB');
 }).catch((err)=>{
