@@ -21,8 +21,9 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
+    
     try {
-      setLoading(true);
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -31,17 +32,19 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.success === false) {
+      
+      if (res.status !== 201) {
         setError(data.message);
         setLoading(false);
         return;
       }
-      setError(null);
+
+      alert('User signed up successfully');
       setLoading(false);
       navigate('/sign-in');
     } catch (error) {
       setLoading(false);
-      setError(error.message);
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -49,7 +52,7 @@ export default function SignUp() {
     <div className="max-w-lg mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg border border-gray-300">
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Sign Up</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
           <input
             type="text"
             placeholder="First Name"
