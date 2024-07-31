@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      default: '',
+    },
     username: {
       type: String,
       required: true,
@@ -13,8 +21,8 @@ const userSchema = new mongoose.Schema(
       unique: true,
       match: [
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        "Please enter a valid email address"
-      ]
+        'Please enter a valid email address',
+      ],
     },
     password: {
       type: String,
@@ -23,16 +31,16 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
     },
     bio: {
       type: String,
-      default: "",
+      default: '',
     },
     banner: {
       type: String,
       default:
-        "https://via.placeholder.com/1500x500.png?text=Default+Banner",
+        'https://via.placeholder.com/1500x500.png?text=Default+Banner',
     },
     createdAt: {
       type: Date,
@@ -46,6 +54,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;
