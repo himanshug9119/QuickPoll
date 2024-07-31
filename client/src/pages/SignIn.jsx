@@ -6,10 +6,10 @@ import OAuth from "../components/OAuth.jsx";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
+  const { error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -31,7 +31,8 @@ export default function SignIn() {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate("/");
+      alert("User signed in successfully");
+      navigate("/profile/alice_j");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }

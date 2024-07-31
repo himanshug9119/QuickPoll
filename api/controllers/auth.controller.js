@@ -2,8 +2,11 @@ import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs'
 import {errorHandler} from '../utils/error.js'
 import jwt from 'jsonwebtoken'
-const SECRET_KEY = process.env.SECRET_KEY;
+import dotenv from 'dotenv'
+dotenv.config();
+const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 const hash_password_times = 10;
+console.log(SECRET_KEY)
 
 // signup controller
 export const signup = async (req, res, next) => {
@@ -29,7 +32,7 @@ export const signup = async (req, res, next) => {
 
         // Save the user to the database
         await newUser.save();
-
+        // console.log(newUser)
         return res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         // Handle errors
@@ -71,7 +74,7 @@ export const signin = async (req, res, next) => {
 
       // Set token in cookies and send response
       res.cookie('access_token', token, { httpOnly: true, maxAge: 3600000 }); // Cookie expires in 1 hour
-      res.status(200).json(userWithoutPassword);
+      return res.status(200).json(userWithoutPassword);
   } catch (err) {
       next(err);
   }

@@ -7,7 +7,7 @@ import path from 'path'
 import dotenv from 'dotenv'
 dotenv.config();
 
-const URL = process.env.MONGO_CONNECT_URL;
+const URL = process.env.REACT_APP_MONGO_CONNECT_URL;
 
 mongoose.connect(URL).then(()=>{
     console.log('Connected to mongoDB');
