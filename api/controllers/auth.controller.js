@@ -5,20 +5,36 @@ import jwt from 'jsonwebtoken'
 const JWT_SECRET = process.env.SECRET_KEY;
 const hash_password_times = 10;
 
-export const signup = async (req , res, next)=>{
-    const {username , email, password} = req.body;
-    const hasedPassword = bcryptjs.hashSync(
-      password,
-      hash_password_times
-    );
-    const newUser = new User({ username, email, password:hasedPassword });
+// signup controller
+export const signup = async (req, res, next) => {
+    const { firstName, lastName, username, email, password } = req.body;
+    // Validate input
+    if (!firstName || !username || !email || !password) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    // Hash the password
+    const hashedPassword = bcryptjs.hashSync(password, hash_password_times);
+    // Create a new user
+    const newUser = new User({
+        firstName,
+        lastName,
+        username,
+        email,
+        password: hashedPassword
+    });
     try {
+        // Save the user to the database
         await newUser.save();
-        res.status(201).json({"Message":"User registered successfully"})
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
+        // Handle errors
+        if (error.code === 11000) {
+            // Duplicate key error
+            return res.status(400).json({ message: 'Username or email already exists' });
+        }
         next(error);
     }
-}
+};
 
 export const signin = async (req , res, next)=>{
     const {email, password} = req.body;
