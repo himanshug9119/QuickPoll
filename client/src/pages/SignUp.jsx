@@ -3,7 +3,13 @@ import { useState } from 'react';
 import OAuth from "../components/OAuth";
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: ''
+  });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -40,13 +46,34 @@ export default function SignUp() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg border border-gray-300">
+    <div className="max-w-lg mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg border border-gray-300">
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Sign Up</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
+          <input
+            type="text"
+            placeholder="First Name"
+            id="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors flex-1"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            id="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors flex-1"
+            required
+          />
+        </div>
         <input
           type="text"
           placeholder="Username"
           id="username"
+          value={formData.username}
           onChange={handleChange}
           className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           required
@@ -55,6 +82,7 @@ export default function SignUp() {
           type="email"
           placeholder="Email"
           id="email"
+          value={formData.email}
           onChange={handleChange}
           className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           required
@@ -63,6 +91,7 @@ export default function SignUp() {
           type="password"
           placeholder="Password"
           id="password"
+          value={formData.password}
           onChange={handleChange}
           className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           required
