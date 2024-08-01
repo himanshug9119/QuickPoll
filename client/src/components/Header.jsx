@@ -36,7 +36,7 @@ export default function Header() {
           <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
             Create Poll
           </Link>
-          <Link to={currentUser ? '/profile' : (isSignUpPage ? '/sign-in' : '/sign-up')}>
+          <Link to={currentUser ? `/profile/${currentUser.username}` : (isSignUpPage ? '/sign-in' : '/sign-up')}>
             {currentUser ? (
               <img
                 className="rounded-full h-8 w-8 object-cover border-2 border-blue-500"
