@@ -32,7 +32,7 @@ export default function SignIn() {
       }
       dispatch(signInSuccess(data));
       alert("User signed in successfully");
-      navigate("/profile/alice_j");
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
