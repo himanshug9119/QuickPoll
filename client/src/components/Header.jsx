@@ -68,9 +68,11 @@ export default function Header() {
           <Link to="/about" className="text-gray-300 hover:text-white hover:underline">
             About
           </Link>
-          <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
-            Create Poll
-          </Link>
+          {currentUser && (
+            <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
+              Create Poll
+            </Link>
+          )}
           {currentUser ? (
             <div className="relative">
               <img
