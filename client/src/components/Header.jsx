@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   signOutUserStart,
   signOutUserSuccess,
@@ -10,7 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 
 export default function Header() {
-  const { currentUser } = useSelector(state => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -32,14 +32,14 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch("/api/auth/signout");
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
         return;
       }
       dispatch(signOutUserSuccess(data));
-      navigate('/');
+      navigate("/");
     } catch (error) {
       dispatch(signOutUserFailure(error.message));
     }
@@ -55,14 +55,23 @@ export default function Header() {
           </h1>
         </Link>
         <div className="hidden md:flex md:items-center md:gap-6 md:ml-auto">
-          <Link to="/" className="text-gray-300 hover:text-white hover:underline">
+          <Link
+            to="/"
+            className="text-gray-300 hover:text-white hover:underline"
+          >
             Home
           </Link>
-          <Link to="/about" className="text-gray-300 hover:text-white hover:underline">
+          <Link
+            to="/about"
+            className="text-gray-300 hover:text-white hover:underline"
+          >
             About
           </Link>
-          {currentUser && location.pathname !== '/create-poll' && (
-            <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
+          {currentUser && location.pathname !== "/create-poll" && (
+            <Link
+              to="/create-poll"
+              className="text-gray-300 hover:text-white hover:underline"
+            >
               Create Poll
             </Link>
           )}
@@ -86,7 +95,7 @@ export default function Header() {
             </div>
           )}
           {!currentUser && (
-            <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
+            <Link to={isSignUpPage ? "/sign-in" : "/sign-up"}>
               <span className="text-gray-300 hover:text-white hover:underline">
                 {isSignUpPage ? "Sign In" : "Sign Up"}
               </span>
@@ -100,18 +109,33 @@ export default function Header() {
 
       {isMenuOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-90 flex flex-col items-center pt-16 md:hidden">
-          <button className="absolute top-4 right-4 text-white text-2xl" onClick={handleMenuClose}>
+          <button
+            className="absolute top-4 right-4 text-white text-2xl"
+            onClick={handleMenuClose}
+          >
             <FaTimes />
           </button>
           <div className="flex flex-col items-center gap-4 text-center">
-            <Link to="/" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
+            <Link
+              to="/"
+              className="text-gray-300 hover:text-white hover:underline text-xl"
+              onClick={handleMenuClose}
+            >
               Home
             </Link>
-            <Link to="/about" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
+            <Link
+              to="/about"
+              className="text-gray-300 hover:text-white hover:underline text-xl"
+              onClick={handleMenuClose}
+            >
               About
             </Link>
-            { currentUser && location.pathname !== '/create-poll' && (
-              <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
+            {currentUser && location.pathname !== "/create-poll" && (
+              <Link
+                to="/create-poll"
+                className="text-gray-300 hover:text-white hover:underline text-xl"
+                onClick={handleMenuClose}
+              >
                 Create Poll
               </Link>
             )}
@@ -134,7 +158,7 @@ export default function Header() {
                 </div>
               </div>
             ) : (
-              <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
+              <Link to={isSignUpPage ? "/sign-in" : "/sign-up"}>
                 <span className="text-gray-300 hover:text-white hover:underline">
                   {isSignUpPage ? "Sign In" : "Sign Up"}
                 </span>
