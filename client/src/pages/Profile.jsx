@@ -45,7 +45,7 @@ const Profile = () => {
         {/* Banner Image */}
         <div className="relative h-40 bg-gray-300">
           <img
-            src={user?.bannerImage || 'https://via.placeholder.com/1600x400'}
+            src={user?.banner || 'https://via.placeholder.com/1600x400'}
             alt="Banner"
             className="w-full h-full object-cover"
           />
@@ -60,7 +60,7 @@ const Profile = () => {
           {/* Profile Picture */}
           <div className="absolute left-6 top-10">
             <img
-              src={user?.profileImage || 'https://i.pravatar.cc/150?img=68'}
+              src={user?.avatar || 'https://i.pravatar.cc/150?img=68'}
               alt="Profile"
               className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
             />
