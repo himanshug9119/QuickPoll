@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import userRouter from './routes/user.routes.js'
 import authRouter from './routes/auth.routes.js'
+import pollRouter from './routes/poll.routes.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 import dotenv from 'dotenv'
@@ -25,6 +26,7 @@ app.listen(3000, ()=>{
 })
 app.use("/api/auth" , authRouter);
 app.use("/api/user" , userRouter);
+app.use("/api/poll" , pollRouter);
 
 app.use(express.static(path.join(__dirname , '/client/dist')));
 
