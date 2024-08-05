@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  updateUserStart,
-  updateUserSuccess,
-  updateUserFailure,
-  deleteUserFailure,
-  deleteUserSuccess,
-  deleteUserStart,
   signOutUserStart,
   signOutUserSuccess,
   signOutUserFailure,
@@ -22,7 +16,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const isSignUpPage = location.pathname === "/sign-up";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,23 +25,23 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const handleProfileClick = () => {
+    navigate(`/profile/${currentUser.username}`);
   };
 
   const handleLogout = async () => {
     try {
-      dispatch(signOutUserStart())
+      dispatch(signOutUserStart());
       const res = await fetch('/api/auth/signout');
       const data = await res.json();
-      if(data.success == false) {
+      if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
-        return ;
+        return;
       }
       dispatch(signOutUserSuccess(data));
       navigate('/');
     } catch (error) {
-      dispatch(signOutUserFailure(data.message));
+      dispatch(signOutUserFailure(error.message));
     }
   };
 
@@ -68,38 +61,31 @@ export default function Header() {
           <Link to="/about" className="text-gray-300 hover:text-white hover:underline">
             About
           </Link>
-          {currentUser && (
+          {currentUser && location.pathname !== '/create-poll' && (
             <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
               Create Poll
             </Link>
           )}
-          {currentUser ? (
-            <div className="relative">
+          {currentUser && (
+            <div className="flex items-center gap-4">
               <img
                 className="rounded-full h-8 w-8 object-cover border-2 border-blue-500 cursor-pointer"
                 src={currentUser.avatar}
                 alt="profile"
-                onClick={handleDropdownToggle}
+                onClick={handleProfileClick}
               />
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-40">
-                  <Link
-                    to={`/profile/${currentUser.username}`}
-                    className="block px-4 py-2 hover:bg-gray-600"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="block px-4 py-2 hover:bg-gray-600 w-full text-left"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+              <div className="relative group">
+                <FaSignOutAlt
+                  onClick={handleLogout}
+                  className="cursor-pointer text-gray-300 hover:text-white"
+                />
+                <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  Logout
+                </span>
+              </div>
             </div>
-          ) : (
+          )}
+          {!currentUser && (
             <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
               <span className="text-gray-300 hover:text-white hover:underline">
                 {isSignUpPage ? "Sign In" : "Sign Up"}
@@ -124,34 +110,28 @@ export default function Header() {
             <Link to="/about" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
               About
             </Link>
-            <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
-              Create Poll
-            </Link>
+            { currentUser && location.pathname !== '/create-poll' && (
+              <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
+                Create Poll
+              </Link>
+            )}
             {currentUser ? (
-              <div className="relative">
+              <div className="flex flex-col items-center gap-4">
                 <img
                   className="rounded-full h-12 w-12 object-cover border-2 border-blue-500 cursor-pointer"
                   src={currentUser.avatar}
                   alt="profile"
-                  onClick={handleDropdownToggle}
+                  onClick={handleProfileClick}
                 />
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-40">
-                    <Link
-                      to={`/profile/${currentUser.username}`}
-                      className="block px-4 py-2 hover:bg-gray-600"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block px-4 py-2 hover:bg-gray-600 w-full text-left"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
+                <div className="relative group">
+                  <FaSignOutAlt
+                    onClick={handleLogout}
+                    className="cursor-pointer text-gray-300 hover:text-white text-2xl"
+                  />
+                  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Logout
+                  </span>
+                </div>
               </div>
             ) : (
               <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
