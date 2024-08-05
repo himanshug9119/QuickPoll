@@ -17,7 +17,7 @@ export default function App(){
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" exact element={<Home />} />
         {/* <Route element={<PrivateRoute1 />}> */}
           <Route path="/profile/:username" element={<Profile />} />
           {/* <Route path="/create-poll" element={<CreatePoll />} /> */}
