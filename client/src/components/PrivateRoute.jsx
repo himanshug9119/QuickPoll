@@ -7,5 +7,5 @@ export function PrivateRoute1() {
 }
 export function PrivateRoute2() {
     const {currentUser} = useSelector((state) =>state.user)
-    return currentUser ? <Navigate to='/profile' /> : <Outlet/>
+    return currentUser ? <Navigate to='/' /> : <Outlet/>
 }
