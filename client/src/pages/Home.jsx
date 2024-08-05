@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { mockPolls } from '../data/mockPollsData';
 import PollItem from '../components/PollItem';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const [allPolls, setAllPolls] = useState([]);
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate();
+  const { currentUser } = useSelector(state => state.user);
 
   useEffect(() => {
-    // Replace 'user1' with the actual logged-in user ID
-    const currentUser = 'alice_j';
+    // Set polls data (this could be replaced with an API call in a real app)
     setAllPolls(mockPolls);
   }, []);
 
-  const handleCreatePoll = () => {
-    navigate('/create-poll');  // Navigate to /create-poll
-  };
+  const handleCreatePoll = () => navigate('/create-poll');
+  const handleSignUp = () => navigate('/sign-up');
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -26,12 +26,21 @@ const Home = () => {
           <p className="text-lg mb-6">
             Discover, participate, and create polls on a variety of topics. Engage with the community and see what others think!
           </p>
-          <button 
-            onClick={handleCreatePoll}  // Add onClick handler
-            className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
-          >
-            Create a Poll
-          </button>
+          {currentUser ? (
+            <button
+              onClick={handleCreatePoll}
+              className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+            >
+              Create a Poll
+            </button>
+          ) : (
+            <button
+              onClick={handleSignUp}
+              className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+            >
+              Get Started
+            </button>
+          )}
         </div>
       </div>
 
