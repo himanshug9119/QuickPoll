@@ -6,7 +6,6 @@ import dotenv from 'dotenv'
 dotenv.config();
 const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 const hash_password_times = 10;
-console.log(SECRET_KEY)
 
 // signup controller
 export const signup = async (req, res, next) => {
