@@ -17,12 +17,12 @@ export default function App(){
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" exact element={<Home />} />
-        {/* <Route element={<PrivateRoute1 />}> */}
-          <Route path="/profile/:username" element={<Profile />} />
-          {/* <Route path="/create-poll" element={<CreatePoll />} /> */}
-        {/* </Route> */}
+        <Route path="/" element={<Home />} />
+        <Route element={<PrivateRoute1 />}>
           <Route path="/create-poll" element={<CreatePoll />} />
+        </Route>
+          {/* <Route path="/create-poll" element={<CreatePoll />} /> */}
+          <Route path="/profile/:username" element={<Profile />} />
 
         <Route element={<PrivateRoute2 />}>
           <Route path="/sign-in" element={<SignIn />} />
