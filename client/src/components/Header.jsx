@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserFailure,
+  deleteUserSuccess,
+  deleteUserStart,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
+} from "../redux/user/userSlice.js";
+import { useDispatch } from "react-redux";
 
 export default function Header() {
   const { currentUser } = useSelector(state => state.user);
+  const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const isSignUpPage = location.pathname === "/sign-up";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,6 +30,26 @@ export default function Header() {
 
   const handleMenuClose = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      dispatch(signOutUserStart())
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if(data.success == false) {
+        dispatch(signOutUserFailure(data.message));
+        return ;
+      }
+      dispatch(signOutUserSuccess(data));
+      navigate('/');
+    } catch (error) {
+      dispatch(signOutUserFailure(data.message));
+    }
   };
 
   return (
@@ -36,19 +71,39 @@ export default function Header() {
           <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline">
             Create Poll
           </Link>
-          <Link to={currentUser ? `/profile/${currentUser.username}` : (isSignUpPage ? '/sign-in' : '/sign-up')}>
-            {currentUser ? (
+          {currentUser ? (
+            <div className="relative">
               <img
-                className="rounded-full h-8 w-8 object-cover border-2 border-blue-500"
+                className="rounded-full h-8 w-8 object-cover border-2 border-blue-500 cursor-pointer"
                 src={currentUser.avatar}
                 alt="profile"
+                onClick={handleDropdownToggle}
               />
-            ) : (
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-40">
+                  <Link
+                    to={`/profile/${currentUser.username}`}
+                    className="block px-4 py-2 hover:bg-gray-600"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block px-4 py-2 hover:bg-gray-600 w-full text-left"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
               <span className="text-gray-300 hover:text-white hover:underline">
                 {isSignUpPage ? "Sign In" : "Sign Up"}
               </span>
-            )}
-          </Link>
+            </Link>
+          )}
         </div>
         <button className="md:hidden text-white" onClick={handleMenuToggle}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
@@ -70,19 +125,39 @@ export default function Header() {
             <Link to="/create-poll" className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
               Create Poll
             </Link>
-            <Link to={currentUser ? '/profile' : (isSignUpPage ? '/sign-in' : '/sign-up')} className="text-gray-300 hover:text-white hover:underline text-xl" onClick={handleMenuClose}>
-              {currentUser ? (
+            {currentUser ? (
+              <div className="relative">
                 <img
-                  className="rounded-full h-12 w-12 object-cover border-2 border-blue-500"
+                  className="rounded-full h-12 w-12 object-cover border-2 border-blue-500 cursor-pointer"
                   src={currentUser.avatar}
                   alt="profile"
+                  onClick={handleDropdownToggle}
                 />
-              ) : (
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-40">
+                    <Link
+                      to={`/profile/${currentUser.username}`}
+                      className="block px-4 py-2 hover:bg-gray-600"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block px-4 py-2 hover:bg-gray-600 w-full text-left"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to={isSignUpPage ? '/sign-in' : '/sign-up'}>
                 <span className="text-gray-300 hover:text-white hover:underline">
                   {isSignUpPage ? "Sign In" : "Sign Up"}
                 </span>
-              )}
-            </Link>
+              </Link>
+            )}
           </div>
         </div>
       )}
