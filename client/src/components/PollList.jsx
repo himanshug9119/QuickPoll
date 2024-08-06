@@ -9,16 +9,16 @@ const PollList = ({ type, userId }) => {
 
     switch (type) {
       case 'created':
-        endpoint = `/api/polls/created/${userId}`;
+        endpoint = `/api/poll/created/${userId}`;
         break;
       case 'answered':
-        endpoint = `/api/polls/answered/${userId}`;
+        endpoint = `/api/poll/answered/${userId}`;
         break;
       case 'liked':
-        endpoint = `/api/polls/liked/${userId}`;
+        endpoint = `/api/poll/liked/${userId}`;
         break;
       case 'commented':
-        endpoint = `/api/polls/commented/${userId}`;
+        endpoint = `/api/poll/commented/${userId}`;
         break;
       default:
         break;
