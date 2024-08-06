@@ -26,10 +26,18 @@ export const getPoll = async (req, res, next) => {
     }
 
     try {
-        const poll = await Poll.findById(pollId);
+        // Fetch the poll and populate the createdBy field with user details
+        const poll = await Poll.findById(pollId)
+            .populate({
+                path: 'createdBy',  // Assuming createdBy is a reference to the User schema
+                select: 'username', // Only include the username field
+            });
+
         if (!poll) {
             return next(errorHandler(404, 'Poll not found'));
         }
+
+        // Return the poll with populated user information
         return res.status(200).json(poll);
     } catch (error) {
         next(error);
