@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import commentMockData from '../data/mockCommentsData'; // Import the mock data
 
-const socket = io('http://localhost:3000'); // Replace with your server URL
+// const socket = io('http://localhost:3000'); // Replace with your server URL
 
 const CommentSection = ({ pollId }) => {
   const [comments, setComments] = useState([]);
@@ -12,26 +12,26 @@ const CommentSection = ({ pollId }) => {
   const commentsEndRef = useRef(null);
   const navigate = useNavigate(); // React Router hook for navigation
 
-  useEffect(() => {
-    // Initialize with mock data
-    setComments(commentMockData);
+  // useEffect(() => {
+  //   // Initialize with mock data
+  //   setComments(commentMockData);
 
-    // Join the room for the specific poll
-    socket.emit('joinPoll', pollId);
+  //   // Join the room for the specific poll
+  //   socket.emit('joinPoll', pollId);
 
-    // Listen for new comments
-    socket.on('newComment', (comment) => {
-      setComments((prevComments) => [comment, ...prevComments]);
-    });
+  //   // Listen for new comments
+  //   socket.on('newComment', (comment) => {
+  //     setComments((prevComments) => [comment, ...prevComments]);
+  //   });
 
-    return () => {
-      socket.off('newComment');
-    };
-  }, [pollId]);
+  //   return () => {
+  //     socket.off('newComment');
+  //   };
+  // }, [pollId]);
 
-  useEffect(() => {
-    commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [comments]);
+  // useEffect(() => {
+  //   commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [comments]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { FaThumbsUp, FaShareAlt, FaUser } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const PollSection = ({poll}) => {
+const PollSection = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [liked, setLiked] = useState(false);
   const [voted, setVoted] = useState(false);
   const navigate = useNavigate();
+  const { pollId } = useParams();
+  const poll = null; // Fetch poll data by ID
 
-  const pollId = poll.id;
-  
   if (!poll) {
     return <p className="text-center text-red-500">No poll data found. Please navigate from the poll list.</p>;
   }
