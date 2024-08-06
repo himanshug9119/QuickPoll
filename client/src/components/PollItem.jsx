@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PollItem = ({ poll, created }) => {
+const PollItem = ({ poll, ownProfile }) => {
   const navigate = useNavigate();
 
   const handleResults = () => {
@@ -50,7 +50,7 @@ const PollItem = ({ poll, created }) => {
             </div>
           ) }
         </div>
-        {created && (
+        {ownProfile && (
           <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-full">
             Delete
           </button>

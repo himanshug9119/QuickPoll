@@ -11,22 +11,31 @@ const Profile = () => {
   const [pollType, setPollType] = useState('created'); // Default to created polls
 
   const { currentUser } = useSelector(state => state.user);
-  const { username: profileUsername } = useParams();
-
+  const { username } = useParams();
+  console.log('Username:', username);
+  console.log('currentUser:', currentUser);
   useEffect(() => {
-    if (currentUser && profileUsername) {
-      if (currentUser.username === profileUsername) {
+    const fetchProfileData = async () => {
+      if (currentUser && currentUser.username === username) {
         setOwnProfile(true);
         setUser(currentUser);
       } else {
         setOwnProfile(false);
-        fetch(`/api/user/${profileUsername}`)
-          .then(response => response.json())
-          .then(data => setUser(data))
-          .catch(error => console.error('Error fetching profile data:', error));
+        try {
+          const res = await fetch(`/api/user/${username}`);
+          if (!res.ok) {
+            throw new Error('Error fetching profile data');
+          }
+          const data = await res.json();
+          setUser(data);
+        } catch (error) {
+          console.error('Error fetching profile data:', error);
+        }
       }
-    }
-  }, [currentUser, profileUsername]);
+    };
+  
+    fetchProfileData();
+  }, [currentUser, username]);
 
   const handlePollTypeChange = (type) => {
     setPollType(type);
@@ -122,7 +131,7 @@ const Profile = () => {
         <div className="mt-8">
           <h2 className="text-2xl font-semibold text-center mb-4">{pollTypeTitles[pollType]}</h2>
           {user && (
-            <PollList type={pollType} userId={user._id} />
+            <PollList type={pollType} userId={user._id} ownProfile={ownProfile} />
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PollItem from './PollItem';
 
-const PollList = ({ type, userId }) => {
+const PollList = ({ type, userId, ownProfile}) => {
   const [polls, setPolls] = useState([]);
   
   useEffect(() => {
@@ -59,7 +59,7 @@ const PollList = ({ type, userId }) => {
             <PollItem
               key={poll.id}
               poll={poll}
-              created={type === 'created'}
+              ownProfile={ownProfile}
             />
           ))
         ) : (
