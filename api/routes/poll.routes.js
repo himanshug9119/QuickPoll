@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/create',verifyToken, createPoll);
 router.delete('/delete/:id',verifyToken, deletePoll);
-router.get('get/:id', getPoll);
-router.get('get/', getPolls);
+router.get('/get/:id', getPoll);
+router.get('/get/', getPolls);
 router.get('/created/:userId', getCreatedPolls);
 router.get('/answered/:userId', getAnsweredPolls);
 router.get('/liked/:userId', getLikedPolls);
