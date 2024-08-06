@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaThumbsUp, FaShareAlt, FaUser } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const PollSection = () => {
+  const [poll, setPoll] = useState(null);
   const [selectedOption, setSelectedOption] = useState('');
   const [liked, setLiked] = useState(false);
   const [voted, setVoted] = useState(false);
   const navigate = useNavigate();
   const { pollId } = useParams();
-  const poll = null; // Fetch poll data by ID
+
+  useEffect(() => {
+    const fetchPoll = async () => {
+      try {
+        const response = await fetch(`/api/poll/get/${pollId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setPoll(data);
+        } else {
+          console.error('Failed to fetch poll data');
+        }
+      } catch (error) {
+        console.error('Error fetching poll data:', error);
+      }
+    };
+
+    fetchPoll();
+  }, [pollId]);
 
   if (!poll) {
     return <p className="text-center text-red-500">No poll data found. Please navigate from the poll list.</p>;
@@ -24,7 +42,7 @@ const PollSection = () => {
       setVoted(true);
       alert(`You voted for: ${selectedOption}`);
       // Handle vote submission, then navigate to results page
-      navigate(`/results/${poll.id}`);
+      navigate(`/results/${poll._id}`);
     } else {
       alert('Please select an option before submitting.');
     }
@@ -60,30 +78,32 @@ const PollSection = () => {
         <FaUser className="text-gray-500 mr-2" />
         <span
           className="text-blue-600 cursor-pointer hover:underline"
-          onClick={() => navigate(`/profile/${poll.createdBy}`)}
+          onClick={() => navigate(`/profile/${poll.createdBy._id}`)}
         >
-          {poll.createdBy}
+          {poll.createdBy.username}
         </span>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="space-y-4 mb-6">
-          {poll.options.map((option, index) => (
+          {poll.options.map((option) => (
             <label
-              key={index}
+              key={option._id}
               className={`block p-4 rounded-md border cursor-pointer transition-colors duration-300 ${
-                selectedOption === option ? 'bg-blue-100 border-blue-500' : 'bg-white border-gray-300'
+                selectedOption === option._id
+                  ? 'bg-blue-100 border-blue-500 text-blue-700'
+                  : 'bg-white border-gray-300 text-gray-700'
               }`}
             >
               <input
                 type="radio"
                 name="pollOption"
-                value={option}
-                checked={selectedOption === option}
+                value={option._id}
+                checked={selectedOption === option._id}
                 onChange={handleOptionChange}
                 className="hidden"
               />
-              <span className="text-lg">{option}</span>
+              <span className="text-lg">{option.optionText}</span>
             </label>
           ))}
         </div>
