@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockPolls } from '../data/mockPollsData';
 import PollItem from '../components/PollItem';
 import { useSelector } from 'react-redux';
 
@@ -10,8 +9,20 @@ const Home = () => {
   const { currentUser } = useSelector(state => state.user);
 
   useEffect(() => {
-    // Set polls data (this could be replaced with an API call in a real app)
-    setAllPolls(mockPolls);
+    const fetchPolls = async () => {
+      try {
+        const response = await fetch('/api/poll/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch polls');
+        }
+        const data = await response.json();
+        setAllPolls(data);
+      } catch (error) {
+        console.error('Error fetching polls:', error);
+      }
+    };
+
+    fetchPolls();
   }, []);
 
   const handleCreatePoll = () => navigate('/create-poll');
@@ -52,7 +63,7 @@ const Home = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {allPolls.map(poll => (
-              <PollItem key={poll.id} poll={poll} />
+              <PollItem key={poll._id} poll={poll} displayFirstAndLastOption={true} />
             ))}
           </div>
         )}
