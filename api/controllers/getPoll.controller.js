@@ -18,15 +18,15 @@ export const getPolls = async (req, res, next) => {
 
 // Get a poll by ID
 export const getPoll = async (req, res, next) => {
-    const { id } = req.params;
+    const { pollId } = req.params;
 
     // Validate input
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(pollId)) {
         return res.status(400).json({ message: 'Invalid poll ID' });
     }
 
     try {
-        const poll = await Poll.findById(id);
+        const poll = await Poll.findById(pollId);
         if (!poll) {
             return next(errorHandler(404, 'Poll not found'));
         }
