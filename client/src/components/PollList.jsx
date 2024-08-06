@@ -23,13 +23,29 @@ const PollList = ({ type, userId }) => {
       default:
         break;
     }
-
-    if (endpoint) {
-      fetch(endpoint)
-        .then(response => response.json())
-        .then(data => setPolls(data))
-        .catch(error => console.error(`Error fetching ${type} polls:`, error));
+    console.log(endpoint);
+    if (!endpoint) {
+      alert('Invalid poll type');
     }
+    const fetchPolls = async (endpoint) => {
+      if (!endpoint) return;
+    
+      try {
+        console.log(endpoint);
+        const response = await fetch(endpoint);
+        if (!response.ok) {
+          throw new Error(`Error fetching ${type} polls: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        setPolls(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    // Example usage
+    fetchPolls(endpoint);
   }, [type, userId]);
 
   return (

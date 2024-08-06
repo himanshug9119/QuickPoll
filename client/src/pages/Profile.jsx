@@ -122,7 +122,7 @@ const Profile = () => {
         <div className="mt-8">
           <h2 className="text-2xl font-semibold text-center mb-4">{pollTypeTitles[pollType]}</h2>
           {user && (
-            <PollList type={pollType} userId={user.id} />
+            <PollList type={pollType} userId={user._id} />
           )}
         </div>
       </div>
