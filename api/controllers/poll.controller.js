@@ -25,37 +25,6 @@ export const createPoll = async (req, res, next) => {
   }
 };
 
-
-// Get all polls
-export const getPolls = async (req, res, next) => {
-    try {
-        const polls = await Poll.find();
-        return res.status(200).json(polls);
-    } catch (error) {
-        next(error);
-    }
-};
-
-// Get a poll by ID
-export const getPoll = async (req, res, next) => {
-    const { id } = req.params;
-
-    // Validate input
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ message: 'Invalid poll ID' });
-    }
-
-    try {
-        const poll = await Poll.findById(id);
-        if (!poll) {
-            return next(errorHandler(404, 'Poll not found'));
-        }
-        return res.status(200).json(poll);
-    } catch (error) {
-        next(error);
-    }
-};
-
 // Delete a poll by ID
 export const deletePoll = async (req, res, next) => {
     const { id } = req.params;
