@@ -1,7 +1,8 @@
 import Poll from '../models/poll.model.js';
 import PollLikes from '../models/pollLikes.model.js';
 import Comment from '../models/comment.model.js';
-import Vote from '../models/vote.model.js';
+import Vote from '../models/vote.model.js'; // Import the Vote model
+
 import { errorHandler } from '../utils/error.js';
 import mongoose from 'mongoose';
 
@@ -62,7 +63,8 @@ export const getAnsweredPolls = async (req, res, next) => {
     }
 
     try {
-        const polls = await Poll.find({ 'votes.user': userId });
+        const answeredVotes = await Vote.find({ votedBy: userId }).populate('pollId');
+        const polls = answeredVotes.map(vote => vote.pollId);
         return res.status(200).json(polls);
     } catch (error) {
         next(error);
