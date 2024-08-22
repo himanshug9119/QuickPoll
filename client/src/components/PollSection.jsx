@@ -40,7 +40,8 @@ const PollSection = () => {
     event.preventDefault();
     if (selectedOption) {
       setVoted(true);
-      alert(`You voted for: ${selectedOption}`);
+      const selectedOptionText = poll.options.find((option) => option._id === selectedOption).optionText;
+      alert(`You voted for: ${selectedOptionText}`);
       // Handle vote submission, then navigate to results page
       navigate(`/results/${poll._id}`);
     } else {
