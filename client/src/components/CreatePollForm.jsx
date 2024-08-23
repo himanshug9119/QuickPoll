@@ -26,7 +26,7 @@ const PollForm = ({
     e.preventDefault();
     setLoading(true);
     try {
-      await handleSubmit(e); // Assuming handleSubmit is an async function
+      await handleSubmit(e); 
     } catch (err) {
       console.error(err);
     } finally {
