@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-
+import Loader from "../components/Loader";
 const PollResults = () => {
   const { pollId } = useParams();
   const [poll, setPoll] = useState(null);
@@ -12,23 +12,20 @@ const PollResults = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPollData = async () => {
+    const fetchData = async () => {
       try {
-        const pollResponse = await fetch(`/api/poll/get/${pollId}`);
+        const [pollResponse, resultsResponse] = await Promise.all([
+          fetch(`/api/poll/get/${pollId}`),
+          fetch(`/api/poll/getResult/${pollId}`),
+        ]);
+
         if (pollResponse.ok) {
           const pollData = await pollResponse.json();
           setPoll(pollData);
         } else {
           console.error("Failed to fetch poll data");
         }
-      } catch (error) {
-        console.error("Error fetching poll data:", error);
-      }
-    };
 
-    const fetchResultsData = async () => {
-      try {
-        const resultsResponse = await fetch(`/api/poll/getResult/${pollId}`);
         if (resultsResponse.ok) {
           const resultsData = await resultsResponse.json();
           setResults(
@@ -42,18 +39,19 @@ const PollResults = () => {
           console.error("Failed to fetch results data");
         }
       } catch (error) {
-        console.error("Error fetching results data:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPollData();
-    fetchResultsData();
+    fetchData();
   }, [pollId]);
 
   if (loading) {
-    return <p className="text-center text-blue-500">Loading results...</p>;
+    return (
+      <Loader/>
+    );
   }
 
   if (!poll) {
@@ -78,7 +76,7 @@ const PollResults = () => {
           Created By -{" "}
           {poll.createdBy && (
             <Link
-              to={`/profile/${poll.createdBy._id}`}
+              to={`/profile/${poll.createdBy.username}`}
               className="text-blue-500 hover:underline"
             >
               {poll.createdBy.username}
@@ -189,7 +187,7 @@ const PollResults = () => {
                     voters.map((voter, i) => (
                       <div key={i} className="text-gray-700 mb-1">
                         <Link
-                          to={`/profile/${voter._id}`}
+                          to={`/profile/${voter.username}`}
                           className="text-blue-500 hover:underline"
                         >
                           {voter.username}
@@ -220,7 +218,7 @@ const PollResults = () => {
                     voters.map((voter, i) => (
                       <div key={i} className="text-gray-700 text-center mb-1">
                         <Link
-                          to={`/profile/${voter._id}`}
+                          to={`/profile/${voter.username}`}
                           className="text-blue-500 hover:underline"
                         >
                           {voter.username}
