@@ -74,12 +74,12 @@ const PollSection = () => {
   return (
     <div className="max-w-xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-6 text-blue-600">{poll.question}</h1>
-      
+
       <div className="flex items-center mb-4">
         <FaUser className="text-gray-500 mr-2" />
         <span
           className="text-blue-600 cursor-pointer hover:underline"
-          onClick={() => navigate(`/profile/${poll.createdBy._id}`)}
+          onClick={() => navigate(`/profile/${poll.createdBy.username}`)}
         >
           {poll.createdBy.username}
         </span>
@@ -92,8 +92,8 @@ const PollSection = () => {
               key={option._id}
               className={`block p-4 rounded-md border cursor-pointer transition-colors duration-300 ${
                 selectedOption === option._id
-                  ? 'bg-blue-100 border-blue-500 text-blue-700'
-                  : 'bg-white border-gray-300 text-gray-700'
+                  ? "bg-blue-100 border-blue-500 text-blue-700"
+                  : "bg-white border-gray-300 text-gray-700"
               }`}
             >
               <input
@@ -125,15 +125,19 @@ const PollSection = () => {
               className="text-gray-700 transition duration-300 ease-in-out"
               title="Like Poll"
             >
-              <FaThumbsUp className={`w-6 h-6 ${liked ? 'text-blue-600' : 'text-gray-400'}`} />
+              <FaThumbsUp
+                className={`w-6 h-6 ${
+                  liked ? "text-blue-600" : "text-gray-400"
+                }`}
+              />
             </button>
           </div>
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
-            title={voted ? 'View Results' : 'Vote'}
+            title={voted ? "View Results" : "Vote"}
           >
-            {voted ? 'View Results' : 'Vote'}
+            {voted ? "View Results" : "Vote"}
           </button>
         </div>
       </form>
