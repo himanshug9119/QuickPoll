@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { FaThumbsUp, FaShareAlt, FaUser } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { FaThumbsUp, FaShareAlt, FaUser } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import Loader from "./Loader"
 const PollSection = () => {
   const [poll, setPoll] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
   const [liked, setLiked] = useState(false);
   const [voted, setVoted] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
   const { pollId } = useParams();
 
@@ -18,18 +19,30 @@ const PollSection = () => {
           const data = await response.json();
           setPoll(data);
         } else {
-          console.error('Failed to fetch poll data');
+          console.error("Failed to fetch poll data");
         }
       } catch (error) {
-        console.error('Error fetching poll data:', error);
+        console.error("Error fetching poll data:", error);
+      } finally {
+        setLoading(false); // Set loading to false once the data is fetched
       }
     };
 
     fetchPoll();
   }, [pollId]);
 
+  if (loading) {
+    return (
+      <Loader/>
+    );
+  }
+
   if (!poll) {
-    return <p className="text-center text-red-500">No poll data found. Please navigate from the poll list.</p>;
+    return (
+      <p className="text-center text-red-500">
+        No poll data found. Please navigate from the poll list.
+      </p>
+    );
   }
 
   const handleOptionChange = (event) => {
@@ -40,12 +53,14 @@ const PollSection = () => {
     event.preventDefault();
     if (selectedOption) {
       setVoted(true);
-      const selectedOptionText = poll.options.find((option) => option._id === selectedOption).optionText;
+      const selectedOptionText = poll.options.find(
+        (option) => option._id === selectedOption
+      ).optionText;
       alert(`You voted for: ${selectedOptionText}`);
       // Handle vote submission, then navigate to results page
       navigate(`/results/${poll._id}`);
     } else {
-      alert('Please select an option before submitting.');
+      alert("Please select an option before submitting.");
     }
   };
 
@@ -55,7 +70,7 @@ const PollSection = () => {
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Poll',
+      title: "Poll",
       text: poll.question,
       url: window.location.href,
     };
@@ -64,10 +79,10 @@ const PollSection = () => {
       if (navigator.share) {
         await navigator.share(shareData);
       } else {
-        alert('Web Share API is not supported in your browser.');
+        alert("Web Share API is not supported in your browser.");
       }
     } catch (error) {
-      console.error('Error sharing:', error);
+      console.error("Error sharing:", error);
     }
   };
 
