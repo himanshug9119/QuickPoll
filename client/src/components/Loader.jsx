@@ -27,10 +27,13 @@ const Loader = () => {
         {/* <div class="flex justify-center items-center">
           <span class="text-blue-600 animate-pulse">Loading...</span>
         </div> */}
-        <div class="flex justify-center items-center h-screen">
+        <div class="flex flex-col justify-center items-center h-screen">
           <div class="relative w-16 h-16">
             <div class="absolute border-4 border-blue-600 rounded-full w-full h-full animate-ping"></div>
             <div class="absolute border-4 border-blue-600 rounded-full w-full h-full animate-ping delay-150"></div>
+          </div>
+          <div class="mt-4">
+            <span class="text-blue-600 animate-pulse">Loading...</span>
           </div>
         </div>
       </div>
