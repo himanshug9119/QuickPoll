@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaThumbsUp, FaShareAlt, FaUser } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import Loader from "./Loader"
+import Loader from "./Loader";
+
 const PollSection = () => {
   const [poll, setPoll] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
@@ -32,9 +33,7 @@ const PollSection = () => {
   }, [pollId]);
 
   if (loading) {
-    return (
-      <Loader/>
-    );
+    return <Loader />;
   }
 
   if (!poll) {
@@ -49,16 +48,37 @@ const PollSection = () => {
     setSelectedOption(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (selectedOption) {
       setVoted(true);
-      const selectedOptionText = poll.options.find(
-        (option) => option._id === selectedOption
-      ).optionText;
-      alert(`You voted for: ${selectedOptionText}`);
-      // Handle vote submission, then navigate to results page
-      navigate(`/results/${poll._id}`);
+
+      try {
+        const voteData = {
+          pollId,
+          optionId: selectedOption,
+          like: liked,
+          votedBy: poll.createdBy._id,
+        };
+        const response = await fetch(`/api/poll/votePoll`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(voteData),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert(`Vote submitted successfully`);
+          navigate(`/results/${poll._id}`);
+        } else {
+          alert(data.message || "Failed to submit vote");
+        }
+      } catch (error) {
+        console.error("Error submitting vote:", error);
+        alert("Error submitting vote");
+      }
     } else {
       alert("Please select an option before submitting.");
     }
