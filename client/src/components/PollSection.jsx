@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaThumbsUp, FaShareAlt, FaUser } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
-
+import { useSelector } from "react-redux";
 const PollSection = () => {
   const [poll, setPoll] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
@@ -11,7 +11,7 @@ const PollSection = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
   const { pollId } = useParams();
-
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const fetchPoll = async () => {
       try {
@@ -58,7 +58,7 @@ const PollSection = () => {
           pollId,
           optionId: selectedOption,
           like: liked,
-          votedBy: poll.createdBy._id,
+          votedBy: currentUser._id,
         };
         const response = await fetch(`/api/poll/votePoll`, {
           method: "POST",
