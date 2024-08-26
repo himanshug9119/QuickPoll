@@ -51,6 +51,11 @@ const PollSection = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (selectedOption) {
+      if(!currentUser){
+        alert("Please signin or signup to vote");
+        navigate('/sign-in');
+        return;
+      }
       setVoted(true);
 
       try {
