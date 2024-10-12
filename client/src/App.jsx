@@ -13,7 +13,7 @@ import ResultsPoll from "./pages/ResultsPoll";
 import { PrivateRoute1, PrivateRoute2 } from "./components/PrivateRoute";
 import ChangePassword from "./pages/ChangePassword";
 import Footer from "./components/Footer";
-// import NotFound from "./pages/NotFound"; // Add a NotFound component
+import PageNotFound from "./pages/PageNotFound"; // Add a NotFound component
 
 export default function App() {
   return (
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Route>
-        {/* <Route path="*" element={<NotFound />} /> 404 route */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
