@@ -37,8 +37,8 @@ export default function Header() {
     handleMenuClose();
   };
 
-  const handleEditProfile = () => {
-    navigate(`/edit-profile`);
+  const handleChangePasswordClick = () => {
+    navigate(`/change-password`);
     setIsDropdownOpen(false);
     handleMenuClose();
   };
@@ -125,10 +125,10 @@ export default function Header() {
                     Visit Profile
                   </button>
                   <button
-                    onClick={handleEditProfile}
+                    onClick={handleChangePasswordClick}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition duration-200"
                   >
-                    Edit Profile
+                    Change Password
                   </button>
                   <button
                     onClick={handleLogout}
@@ -216,12 +216,12 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      handleEditProfile();
+                      handleChangePasswordClick();
                       handleMenuClose();
                     }}
                     className="w-full text-left px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-600 transition duration-200"
                   >
-                    Edit Profile
+                    Change Password
                   </button>
                   <button
                     onClick={() => {
