@@ -52,6 +52,7 @@ export default function Header() {
         dispatch(signOutUserFailure(data.message));
         return;
       }
+      alert(data)
       dispatch(signOutUserSuccess(data));
       navigate("/");
     } catch (error) {
